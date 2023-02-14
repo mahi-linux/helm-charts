@@ -80,7 +80,7 @@ helm package nginx -d ./helm-charts => This will package to under /helm-charts d
 ```
 ##### Publish custom repository to GitHub Pages
 ```
-[root@k8s-master01 ~]# helm repo index --url https://mahi-linux.github.io/helm-chart/ .
+[root@k8s-master01 ~]# helm repo index --url https://mahi-linux.github.io/helm-charts/ .
 
 [root@k8s-master01 ~]# cat index.yaml 
 apiVersion: v1
@@ -98,12 +98,12 @@ entries:
     version: 1.0.0
 generated: "2023-02-14T15:50:01.927468+05:30"
 
-  => Go to  https://github.com/mahi-linux/helm-charts/settings/pages
-  => On the Branch dropdown and select master and root directory then click on save.
-  => This GitHub page will take few min to publish. Validate the pipeline status: heck the workflow: https://github.com/mahi-linux/helm-charts/actions
-  => commit and push the code: git add . && git commit -am "nginx chart" && git push
-
 ```
+* Go to  https://github.com/mahi-linux/helm-charts/settings/pages
+* On the Branch dropdown and select master and root directory then click on save.
+* This GitHub page will take few min to publish. Validate the pipeline status: check the workflow: https://github.com/mahi-linux/helm-charts/actions
+* commit and push the code: git add . && git commit -am "nginx chart" && git push
+
 ##### Web validation
 ```
 Once the webpage is published validate: https://mahi-linux.github.io/helm-charts/index.yaml
