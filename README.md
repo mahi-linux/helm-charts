@@ -35,34 +35,14 @@ nginx/
 
 4 directories, 10 files
 ```
+
+##### Make required changes
 ```
-[root@k8s-master01 ~]# helm list -A
-NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
-
-[root@k8s-master01 ~]# helm install custom-nginx nginx/
-NAME: custom-nginx
-LAST DEPLOYED: Tue Feb 14 15:04:27 2023
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-NOTES:
-1. Get the application URL by running these commands:
-  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=nginx,app.kubernetes.io/instance=custom-nginx" -o jsonpath="{.items[0].metadata.name}")
-  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
-
-[root@k8s-master01 ~]# helm list -A
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
-custom-nginx    default         1               2023-02-14 15:04:27.663026 +0530 IST    deployed        nginx-0.1.0     1.16.0   
+* For example if you are using Minikube change "service type" from ClusterPort to NodePort in values.yaml file
 ```
 
-##### Notice custom deployed nginx pod is running
+##### `helm list` runs a series of tests to verify that the chart is well-formed:
 ```
-[root@k8s-master01 ~]# kubectl get po
-NAME                            READY   STATUS    RESTARTS   AGE
-custom-nginx-59855d95fb-njbfk   1/1     Running   0          91s
-
 [root@k8s-master01 ~]# helm lint nginx
 ==> Linting nginx
 [INFO] Chart.yaml: icon is recommended
@@ -78,6 +58,7 @@ Successfully packaged chart and saved it to: /Users/maheshwar.thumkuntla/kuberne
 helm package nginx -u => This will download the dependencies at the latest version and package your chart.
 helm package nginx -d ./helm-charts => This will package to under /helm-charts directory
 ```
+
 ##### Publish custom repository to GitHub Pages
 ```
 [root@k8s-master01 ~]# helm repo index --url https://mahi-linux.github.io/helm-charts/ .
@@ -99,9 +80,11 @@ entries:
 generated: "2023-02-14T15:50:01.927468+05:30"
 
 ```
-* Go to  https://github.com/mahi-linux/helm-charts/settings/pages
+##### Go to:  https://github.com/mahi-linux/helm-charts/settings/pages
+
 * On the Branch dropdown and select master and root directory then click on save.
-* This GitHub page will take few min to publish. Validate the pipeline status: check the workflow: https://github.com/mahi-linux/helm-charts/actions
+* This GitHub page will take few min to publish. Validate the pipeline status:
+* Check the github workflow: https://github.com/mahi-linux/helm-charts/actions
 
 #### commit and push the code
 ```
@@ -114,11 +97,65 @@ and  https://mahi-linux.github.io/helm-charts/
 
 [root@k8s-master01 ~]# helm repo add myrepo https://mahi-linux.github.io/helm-charts
 
+##### Add helm custom repository
+```
 [root@k8s-master01 ~]# helm repo list
 NAME    URL                                     
 myrepo  https://mahi-linux.github.io/helm-charts
+```
+##### search for nginx chart
+```
+[root@k8s-master01 ~]# helm search repo nginx
+NAME            CHART VERSION   APP VERSION     DESCRIPTION                
+myrepo/nginx    0.1.0           1.16.0          A Helm chart for Kubernetes
+```
+##### To get the latest updates with helm
+```
+maheshwar.thumkuntla@MHYD789329BA helm-charts % helm repo update      
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "myrepo" chart repository
+Update Complete. ⎈Happy Helming!⎈
 
-* To remove the repository
+maheshwar.thumkuntla@MHYD789329BA helm-charts % helm search repo nginx
+NAME        	CHART VERSION	APP VERSION	DESCRIPTION                
+myrepo/nginx	1.0.0        	1.16.0     	A Helm chart for Kubernetes
+
+##### Install nginx chart
+```
+[root@k8s-master01 ~]# helm install nginx myrepo/nginx
+NAME: nginx
+LAST DEPLOYED: Tue Feb 14 19:14:59 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services nginx)
+  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+```
+
+##### Get all the services installed by helm nginx chart
+```
+[root@k8s-master01 ~]# kubectl get all
+NAME                      READY   STATUS    RESTARTS   AGE
+pod/nginx-c9dd94d-gt22l   1/1     Running   0          9s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        14d
+service/nginx        NodePort    10.110.13.169   <none>        80:31630/TCP   9s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   1/1     1            1           9s
+
+NAME                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-c9dd94d   1         1         1       9s
+```
+##### Validate with minikube
+[root@k8s-master01 ~]# minikube service nginx
+```
+
+##### To remove the repository
 [root@k8s-master01 ~]# helm repo remove myrepo
 "myrepo" has been removed from your repositories
 ```
