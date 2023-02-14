@@ -102,8 +102,11 @@ generated: "2023-02-14T15:50:01.927468+05:30"
 * Go to  https://github.com/mahi-linux/helm-charts/settings/pages
 * On the Branch dropdown and select master and root directory then click on save.
 * This GitHub page will take few min to publish. Validate the pipeline status: check the workflow: https://github.com/mahi-linux/helm-charts/actions
-* commit and push the code: git add . && git commit -am "nginx chart" && git push
 
+#### commit and push the code
+```
+ git add . && git commit -am "nginx chart" && git push
+```
 ##### Web validation
 ```
 Once the webpage is published validate: https://mahi-linux.github.io/helm-charts/index.yaml

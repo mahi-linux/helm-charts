@@ -3,12 +3,15 @@ entries:
   nginx:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-02-14T18:44:45.960248+05:30"
+    created: "2023-02-14T19:09:15.198201+05:30"
     description: A Helm chart for Kubernetes
-    digest: 75c0466613c5091ed9fc271be5e3e66b71fd133e4126ff4f707fd6660e26ee17
+    digest: d2acccb7f13a1a1ddae39c524920b36262b64b5e29df82da67e94992221db075
+    maintainers:
+    - name: Mahesh
+    - email: mahi.linux@gmail.com
     name: nginx
     type: application
     urls:
-    - https://mahi-linux.github.io/helm-charts/nginx-0.1.0.tgz
-    version: 0.1.0
-generated: "2023-02-14T18:44:45.957841+05:30"
+    - https://mahi-linux.github.io/helm-charts/nginx-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-02-14T19:09:15.197392+05:30"
