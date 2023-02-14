@@ -1,9 +1,9 @@
 # helm-charts
 
-
 ##### How to create custom helm charts
-
 ```
+Reference: https://medium.com/@mattiaperi/create-a-public-helm-chart-repository-with-github-pages-49b180dbb417
+
 # Create new github repository
  => https://github.com/new
  => Clone to your local machine: git clone https://github.com/mahi-linux/helm-charts.git
