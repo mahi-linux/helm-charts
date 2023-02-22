@@ -110,12 +110,12 @@ myrepo/nginx    0.1.0           1.16.0          A Helm chart for Kubernetes
 ```
 ##### To get the latest updates with helm
 ```
-maheshwar.thumkuntla@MHYD789329BA helm-charts % helm repo update      
+[root@k8s-master01 ~]# helm repo update      
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "myrepo" chart repository
 Update Complete. ⎈Happy Helming!⎈
 
-maheshwar.thumkuntla@MHYD789329BA helm-charts % helm search repo nginx
+[root@k8s-master01 ~]# helm search repo nginx
 NAME        	CHART VERSION	APP VERSION	DESCRIPTION                
 myrepo/nginx	1.0.0        	1.16.0     	A Helm chart for Kubernetes
 ```
@@ -156,6 +156,7 @@ replicaset.apps/nginx-c9dd94d   1         1         1       9s
 ```
 
 ##### To remove the repository
+```
 [root@k8s-master01 ~]# helm repo remove myrepo
 "myrepo" has been removed from your repositories
 ```
