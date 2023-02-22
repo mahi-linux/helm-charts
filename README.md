@@ -14,7 +14,6 @@ Reference: https://medium.com/@mattiaperi/create-a-public-helm-chart-repository-
 [root@k8s-master01 ~]# helm create nginx
 Creating nginx
 ```
-
 ##### To view the chart
 ```
 [root@k8s-master01 ~]# tree nginx/
@@ -92,13 +91,13 @@ generated: "2023-02-14T15:50:01.927468+05:30"
 ```
 ##### Web validation
 ```
-Once the webpage is published validate: https://mahi-linux.github.io/helm-charts/index.yaml
-and  https://mahi-linux.github.io/helm-charts/
-
-[root@k8s-master01 ~]# helm repo add myrepo https://mahi-linux.github.io/helm-charts
-
+Once the webpage is published validate index page:
+https://mahi-linux.github.io/helm-charts/index.yaml (and)
+https://mahi-linux.github.io/helm-charts/
+```
 ##### Add helm custom repository
 ```
+[root@k8s-master01 ~]# helm repo add myrepo https://mahi-linux.github.io/helm-charts
 [root@k8s-master01 ~]# helm repo list
 NAME    URL                                     
 myrepo  https://mahi-linux.github.io/helm-charts
@@ -119,7 +118,7 @@ Update Complete. ⎈Happy Helming!⎈
 maheshwar.thumkuntla@MHYD789329BA helm-charts % helm search repo nginx
 NAME        	CHART VERSION	APP VERSION	DESCRIPTION                
 myrepo/nginx	1.0.0        	1.16.0     	A Helm chart for Kubernetes
-
+```
 ##### Install nginx chart
 ```
 [root@k8s-master01 ~]# helm install nginx myrepo/nginx
@@ -152,6 +151,7 @@ NAME                            DESIRED   CURRENT   READY   AGE
 replicaset.apps/nginx-c9dd94d   1         1         1       9s
 ```
 ##### Validate with minikube
+```
 [root@k8s-master01 ~]# minikube service nginx
 ```
 
